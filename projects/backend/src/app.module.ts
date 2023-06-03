@@ -3,6 +3,8 @@ import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 import { join } from 'path'
 import { UserResolver } from './resolvers/user.resolver'
+import { PrismaService } from './services/prisma.service'
+import { UserService } from './services/user.service'
 
 @Module({
   imports: [
@@ -11,6 +13,7 @@ import { UserResolver } from './resolvers/user.resolver'
       autoSchemaFile: join(process.cwd(), 'src/schema.gql')
     }),
   ],
-  providers: [UserResolver]
+  providers: [UserResolver, PrismaService, UserService],
+  controllers: []
 })
 export class AppModule {}
