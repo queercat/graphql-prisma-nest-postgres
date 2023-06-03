@@ -6,7 +6,7 @@ export class User {
   id: number
 
   @Field(type => String)
-  username: string
+  name: string
 
   @Field(type => String)
   password: string
