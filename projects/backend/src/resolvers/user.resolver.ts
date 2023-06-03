@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { Args, Int, Mutation, OmitType, Query, Resolver } from "@nestjs/graphql";
 import { User } from "src/models/user.model";
 import { UserService } from "src/services/user.service";
 
@@ -21,15 +21,15 @@ export class UserResolver {
 
   @Query(returns => User)
   async userByName(@Args('name') name: string) {
-    const users = await this.userService.findMany({
+    const user = await this.userService.findOne({
       name: name,
     })
 
-    if (!users || users.length === 0) {
+    if (!user) {
       throw new Error(`No user found with name: ${name}`)
     }
 
-    return users[0]
+    return user
   }
 
 
@@ -37,12 +37,11 @@ export class UserResolver {
   async createUser(@Args('name') name: string, @Args('password') password: string) {
     const hashedPassword = await this.userService.hashPassword(password)
 
-    const user = await this.userService.create({
+    let user = await this.userService.create({
       name,
       password: hashedPassword,
     })
 
-    /* split the password from the user object before returning it */
     const { password: _, ...result } = user
 
     return result

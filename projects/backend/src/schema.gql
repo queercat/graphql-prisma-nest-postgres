@@ -5,11 +5,11 @@
 type User {
   id: Int!
   name: String!
-  password: String!
 }
 
 type Query {
   user(id: Int!): User!
+  userByName(name: String!): User!
 }
 
 type Mutation {
