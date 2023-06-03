@@ -10,5 +10,6 @@ import { join } from 'path'
       autoSchemaFile: join(process.cwd(), 'src/schema.gql')
     }),
   ],
+  
 })
 export class AppModule {}
