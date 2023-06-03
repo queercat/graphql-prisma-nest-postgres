@@ -8,14 +8,14 @@ export class UserResolver {
 
   @Query(returns => User)
   async user(@Args('id', { type: () => Int }) id: number) {
-    try {
-      const user = await this.userService.findOne({
-        id: id,
-      })
-      return user
-    } catch (e) {
-      console.error(e)
-      throw e
+    const user = await this.userService.findOne({
+      id: id,
+    })
+
+    if (!user) {
+      throw new Error(`No user found with id: ${id}`)
     }
+
+    return user
   }
 }
